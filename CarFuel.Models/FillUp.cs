@@ -1,19 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarFuel.Models {
   public class FillUp {
+
+
+     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+
     private bool isFull;
 
-    // 
+    
+    [Range(0,999999)]
     public int Odometer { get; set; }
 
+    [Range(0,999)]
     public double Liters { get; set; }
 
-    public bool? IsFull { get; set; }
+
+    public bool IsFull { get; set; }
+
+    public bool IsForgot { get; set; }
+
+    public FillUp NextFillUp { get; set; }
+
+    public FillUp PreviousFillUp { get; set; }
+
+
 
     public FillUp() : this(0, 0, true) {
       // IsFull = true;
@@ -51,12 +70,6 @@ namespace CarFuel.Models {
       }
     }
 
-    public FillUp NextFillUp { get; set; }
-
-    public bool IsForgot { get; set; }
-
-
-
-    public FillUp PreviousFillUp { get; set; }
+   
   }
 }

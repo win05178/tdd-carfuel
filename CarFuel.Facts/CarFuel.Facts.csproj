@@ -78,6 +78,10 @@
       <Project>{2b03f3e9-4e66-41d2-9bbd-8b867ba6c903}</Project>
       <Name>CarFuel.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CarFuel.Services\CarFuel.Services.csproj">
+      <Project>{9cbac995-51ed-47a0-991e-720da4afbb64}</Project>
+      <Name>CarFuel.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
