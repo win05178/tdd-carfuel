@@ -135,12 +135,14 @@ namespace CarFuel.Facts
       {
         var c = new Car();
 
-        FillUp f1 = c.AddFillUp(1000, 50, true, true);
-        FillUp f2 = c.AddFillUp(1600, 60, true, true);
-        FillUp f3 = c.AddFillUp(2000, 50, true, false);
-        c.AddFillUp(4000, 50, true,true);
-        c.AddFillUp(4600, 50, true, true);
-        c.AddFillUp(5000, 50, true, false);
+        c.AddFillUp(1000, 50);
+        c.AddFillUp(1600, 60);
+        c.AddFillUp(2000, 50);
+
+        c.AddFillUp(4000, 50, isForgot: true);
+        c.AddFillUp(4600, 50);
+        c.AddFillUp(5000, 50);
+
 
         var kml = c.get_AveragekilomaterPerLister;
 

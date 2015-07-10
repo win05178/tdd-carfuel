@@ -18,57 +18,41 @@ namespace CarFuel.Models
        get {
 
      
-         if (this.FillUps.Count< 1)
-         {
+        if (FillUps.Count() < 2) {
+          return null;
+        }
 
-           return null;
-         }
-         else
-         {
+        FillUp first;
+        FillUp last = FillUps.Last();
+        double sumKML = 0.0;
+        int blocks = 0;
 
+        do {
+          while (last.IsForgot && last.PreviousFillUp != null) {
+            last = last.PreviousFillUp;
+          }
 
+          first = last;
+          double liters = 0.0;
+          while (first.PreviousFillUp != null) {
+            liters += first.Liters;
+            first = first.PreviousFillUp;
+            if (first.IsForgot) break;
+          }
 
-           FillUp first;
-             FillUp  last = FillUps.Last();
-             double sumKML = 0.0;
-             int blocks = 0;
+          var distance = last.Odometer - first.Odometer;
 
+          if (liters > 0) {
+            var kml = Math.Round(distance / liters, 1, MidpointRounding.AwayFromZero);
+            sumKML += kml;
+            blocks++;
+          }
 
+          last = first.PreviousFillUp;
+        } while (last != null);
 
-             do
-             {
-               var liters = 0.0;
-               while (last.IsForgot && last.PreviousFillUp != null)
-               {
-                 last = last.PreviousFillUp;
-               }
-
-               first = last;
-               while (first.PreviousFillUp != null)
-               {
-                 liters += first.Liters;
-                 first = first.PreviousFillUp;
-                 if (first.IsForgot) break;
-               }
-
-               var distance = last.Odometer - first.Odometer;
-
-               if (liters > 0)
-               {
-                 var kml = Math.Round(distance / liters, 1, MidpointRounding.AwayFromZero);
-
-                 sumKML += kml;
-                 blocks++;
-               }
-
-               last = first.PreviousFillUp;
-
-             } while (last!=null);
-
-             return blocks;
-
-          
-         }
+        return Math.Round(sumKML / blocks, 1, MidpointRounding.AwayFromZero);
+     
       }
     }
 
@@ -77,7 +61,10 @@ namespace CarFuel.Models
       FillUps = new HashSet<FillUp>();
     }
 
-    public FillUp AddFillUp(int odometer, double liters, bool isFull,bool isForgot=false)
+    public FillUp AddFillUp(int odometer,
+                            double liters,
+                            bool isFull = true,
+                            bool isForgot = false)
     {
       var f = new FillUp();
       f.Odometer = odometer;
