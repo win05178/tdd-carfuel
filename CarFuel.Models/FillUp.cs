@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarFuel.Models {
   public class FillUp {
+    private bool isFull;
+
     // 
     public int Odometer { get; set; }
 
@@ -21,20 +23,40 @@ namespace CarFuel.Models {
       this.Odometer = odometer;
       this.Liters = liters;
       this.IsFull = isFull;
+
+    }
+
+    public FillUp(int odometer, double liters, bool isFull, bool isForgot)
+    {
+      // TODO: Complete member initialization
+      this.Odometer = odometer;
+      this.Liters = liters;
+      this.isFull = isFull;
+      this.IsForgot = isForgot;
     }
 
     public double? KilometersPerLiter {
       get {
-        if (this.NextFillUp == null) {
+        if ((this.NextFillUp == null) || this.NextFillUp.IsForgot )
+        {
           return null;
         }
+        
         var kml = (NextFillUp.Odometer - this.Odometer)
                   / NextFillUp.Liters;
 
         return Math.Round(kml, 1, MidpointRounding.AwayFromZero);
+        
+       
       }
     }
 
     public FillUp NextFillUp { get; set; }
+
+    public bool IsForgot { get; set; }
+
+
+
+    public FillUp PreviousFillUp { get; set; }
   }
 }
