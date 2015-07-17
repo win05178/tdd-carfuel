@@ -24,6 +24,17 @@ namespace CarFuel.Services
       }
       #endregion
 
+      public override Car Add(Car item)
+      {
+        var allowedMakes = new string[] { "Honda", "Toyota" };
+        if (!allowedMakes.Contains(item.Make))
+        {
+          throw new Exception("Invalid make. Can't add.");
+        }
+       
+        return base.Add(item);
+      }
+
 
       
     }
