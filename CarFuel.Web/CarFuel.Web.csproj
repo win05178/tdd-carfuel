@@ -248,6 +248,10 @@
       <Project>{9cbac995-51ed-47a0-991e-720da4afbb64}</Project>
       <Name>CarFuel.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GFX.Core\GFX.Core.csproj">
+      <Project>{be20a0e8-526d-4657-8c04-45acd3605886}</Project>
+      <Name>GFX.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

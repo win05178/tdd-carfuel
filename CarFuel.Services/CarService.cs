@@ -7,36 +7,24 @@ using CarFuel.DataAccess;
 using CarFuel.Models;
 using CarFuel.DataAccess.Repository;
 using CarFuel.DataAccess.Context;
+using GFX.Core;
 
 namespace CarFuel.Services
 {
-    public class CarService
+    public class CarService : AppServiceBase<Car>
     {
 
-      private readonly CarRepository repo;
+      #region Service<T>
+      public override IRepository<Car> Repository { get; set; }
 
-      public CarService()
-        : this(new CarRepository())
+      public override Car Find(params object[] keys)
       {
-        
+        Guid key1 = (Guid)keys[0];
+        return Query(x => x.Id == key1).SingleOrDefault();
+      }
+      #endregion
 
-      }
-      public CarService(CarRepository repo)
-      {
-        this.repo = repo;
-        this.repo.Context = new CarDb();
-      }
 
-      public IEnumerable<Car> GetAll()
-      {
-        return repo.Query(c=>true).ToList();
-      }
-      public Car Add(Car item)
-      {
-        var c = repo.Add(item);
-        repo.SaveChanges();
-        return c;
-      }
-
+      
     }
 }

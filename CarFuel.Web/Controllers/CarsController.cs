@@ -11,18 +11,31 @@ namespace CarFuel.Web.Controllers
 {
     public class CarsController : Controller
     {
-      private CarService s = new CarService();
+    //  private CarService s = new CarService();
         // GET: Cars
+        private App app = new App();
+
+        protected override void Dispose(bool disposing)
+        {
+          if (disposing)
+          {
+            app.Dispose();
+          }
+          base.Dispose(disposing);
+        }
+
+
+
         public ActionResult Index()
         {
-          var cars = s.GetAll();
+          var cars = app.Cars.All();
             return View(cars);
         }
         public ActionResult AddCar()
         {
           var c = new Car();
-          c.Make = "Toyota";
-          c.Model = "Camry";
+          c.Make = "Honda";
+          c.Model = "Jazz";
           c.Color = "White";
 
           var r = new Random();
@@ -36,8 +49,8 @@ namespace CarFuel.Web.Controllers
 
             odo += r.Next(300,800);
           }
-          s.Add(c);
-
+          app.Cars.Add(c);
+          app.Cars.SaveChanges();
           return RedirectToAction("Index");
         }
     }
